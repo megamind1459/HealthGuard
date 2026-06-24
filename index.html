@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthGuard AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+<div class="hero">
+  <div class="eyebrow">Built for Lagos &amp; beyond</div>
+  <h1>HealthGuard AI</h1>
+  <p>Plain-language symptom guidance, nearby care, and records you control.</p>
+</div>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand"><span class="dot">♥</span> HealthGuard AI</div>
+    <nav class="nav-stack">
+      <button class="navlink active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+        Dashboard
+      </button>
+      <button class="navlink" data-page="symptom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0-1.5 1-2.5 2.5-2.5S14 8 14 9.5"/><path d="M12 13v3"/></svg>
+        Symptom Checker
+      </button>
+      <button class="navlink" data-page="hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.6-9.5 9-9.5 9z"/></svg>
+        Health Hub
+      </button>
+      <button class="navlink" data-page="hospitals">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c5-4.5 8-8.3 8-12a8 8 0 1 0-16 0c0 3.7 3 7.5 8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Locate Hospitals
+      </button>
+      <button class="navlink" data-page="reports">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/></svg>
+        Reports
+      </button>
+      <button class="navlink" data-page="support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.7 2.2c-.8.5-1.2.9-1.2 1.8"/><path d="M12 17h.01"/></svg>
+        Support
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="navlink" data-page="dashboard" id="settingsBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.97 7.97 0 0 0 .1-2 7.97 7.97 0 0 0-.1-2l2.1-1.6-2-3.5-2.5 1a8 8 0 0 0-1.7-1L14.9 3h-4l-.4 2.4a8 8 0 0 0-1.7 1l-2.5-1-2 3.5L6.4 11a7.97 7.97 0 0 0 0 4l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1l.4 2.4h4l.4-2.4c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5z"/></svg>
+        Settings
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div>
+    <div class="topbar">
+      <div class="tabs" id="tabRow">
+        <button class="tab active" data-page="symptom">Symptom Checker</button>
+        <button class="tab" data-page="hub">Health Hub</button>
+        <button class="tab" data-page="hospitals">Locate Hospitals</button>
+        <button class="tab" data-page="reports">Reports</button>
+        <button class="tab" data-page="support">Support</button>
+      </div>
+      <div class="topbar-right">
+        <button class="iconbtn" id="bellBtn">🔔<span class="badge">3</span></button>
+        <div class="profile" id="profileBtn">
+          <div class="avatar">MB</div>
+          <div class="who"><b>Moussa Bello</b><span>Lagos, Nigeria</span></div>
+        </div>
+        <div class="lang-pop" id="langPop">
+          <button>🇬🇧 English</button>
+          <button>🇳🇬 Yoruba</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section class="page active grid2" id="page-dashboard">
+      <div class="card">
+        <h3>Quick Stats <span class="dots">⋮</span></h3>
+        <div class="stat-grid">
+          <div class="stat"><div class="lbl">Last check-in</div><div class="val">2 days ago</div></div>
+          <div class="stat"><div class="lbl">Last assessment</div><div class="val">2 days ago</div></div>
+          <div class="stat"><div class="lbl">Next health date</div><div class="val">In 1 day</div></div>
+          <div class="stat"><div class="lbl">Reports updated</div><div class="val">2 days ago</div></div>
+        </div>
+
+        <h3 style="margin-top:18px;">Early Disease Assessment</h3>
+        <label>Symptoms</label>
+        <input type="text" placeholder="e.g. Headache, fever">
+        <div class="field-row">
+          <div><label>Age</label><input type="number" value="45"></div>
+          <div><label>Weight (kg)</label><input type="number" value="82"></div>
+        </div>
+        <div class="chip-row">
+          <span class="chip selected">Hypertension</span>
+          <span class="chip selected">Malaria</span>
+          <span class="chip">Diabetes</span>
+          <span class="chip">Asthma</span>
+        </div>
+        <button class="btn full" onclick="alert('Assessment submitted — see your updated risk profile on the right.')">Submit</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div class="card">
+          <h3>Your Risk Profile <span class="dots">⋮</span></h3>
+          <div class="risk-row">
+            <div class="risk-item"><span class="risk-dot" style="background:var(--red)"></span>Diabetes<br><b style="color:var(--red)">High</b></div>
+            <div class="risk-item"><span class="risk-dot" style="background:var(--red)"></span>Hyper­tension<br><b style="color:var(--red)">High</b></div>
+            <div class="risk-item"><span class="risk-dot" style="background:var(--amber)"></span>Malaria<br><b style="color:var(--amber)">Moderate</b></div>
+            <div class="risk-item"><span class="risk-dot" style="background:var(--blue)"></span>Typhoid<br><b style="color:var(--blue)">Low</b></div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--line); margin:14px 0;">
+          <label style="margin-bottom:8px;">Recommendations</label>
+          <ul class="recs">
+            <li>See Dr. Amadi at LUTH this week</li>
+            <li>Check blood sugar and blood pressure</li>
+            <li>Start the diet plan in Health Hub</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Hospital Locator <span class="dots">⋮</span></h3>
+          <div class="map-box" id="dashMap"></div>
+          <div class="hosp-list">
+            <div class="hosp-row"><div><div class="hosp-name">LUTH Lagos</div><div class="hosp-sub">Teaching hospital</div></div><div class="dist">4.5 km</div></div>
+            <div class="hosp-row"><div><div class="hosp-name">Evercare Hospital</div><div class="hosp-sub">Private, 24hr</div></div><div class="dist">3.1 km</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Health Insights <span class="dots">⋮</span></h3>
+          <div class="insight">
+            <div class="ai">AI</div>
+            <div><div class="txt">Your blood pressure has trended slightly high this month — keep an eye on sodium intake.</div><div class="time">2 days ago</div></div>
+          </div>
+          <div class="insight">
+            <div class="ai">AI</div>
+            <div><div class="txt">Your activity level dropped this week. A short daily walk can help with both diabetes and hypertension risk.</div><div class="time">5 days ago</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYMPTOM CHECKER -->
+    <section class="page grid2" id="page-symptom">
+      <div class="card">
+        <h3>AI Symptom Checker &amp; Assistant
+          <span class="lang-toggle">
+            <button class="active" data-lang="en">English</button>
+            <button data-lang="yo">Yoruba</button>
+          </span>
+        </h3>
+        <div class="chat-box" id="chatBox">
+          <div class="msg bot">Hi Moussa, what symptom are you noticing today?</div>
+        </div>
+        <div class="chip-row" id="symptomChips">
+          <span class="chip" data-sym="Fever">Fever</span>
+          <span class="chip" data-sym="Headache">Headache</span>
+          <span class="chip" data-sym="Cough">Cough</span>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="Describe how you're feeling...">
+          <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+
+        <h3 style="margin-top:18px;">Early Disease Assessment</h3>
+        <label>Symptom</label>
+        <input type="text" id="symInput" placeholder="Headache, fever...">
+        <div class="field-row">
+          <div><label>Age</label><input type="number" id="ageInput" value="45"></div>
+          <div><label>Weight (kg)</label><input type="number" id="weightInput" value="82"></div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>History</label>
+            <div class="chip-row"><span class="chip selected">Hypertension</span><span class="chip selected">Malaria</span></div>
+          </div>
+          <div>
+            <label>Habits</label>
+            <div class="chip-row"><span class="chip selected">Non-smoker</span><span class="chip selected">Active</span></div>
+          </div>
+        </div>
+        <button class="btn full" id="runAssessment">Submit</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div class="card">
+          <h3>Personalized Health Report <span class="dots">⋮</span></h3>
+          <div class="gauge-wrap">
+            <svg class="gauge" viewBox="0 0 140 80">
+              <path d="M10 75 A60 60 0 0 1 130 75" fill="none" stroke="#e9ecec" stroke-width="12"/>
+              <path d="M10 75 A60 60 0 0 1 130 75" fill="none" stroke="url(#g1)" stroke-width="12" stroke-dasharray="188" stroke-dashoffset="40" stroke-linecap="round"/>
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#22b58e"/><stop offset="50%" stop-color="#f0a83b"/><stop offset="100%" stop-color="#e15850"/>
+              </linearGradient></defs>
+              <line x1="70" y1="75" x2="105" y2="35" stroke="#0c2624" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="70" cy="75" r="4" fill="#0c2624"/>
+            </svg>
+            <div class="gauge-result">Prediction<br><b id="predOut">High risk: Diabetes &amp; Hypertension (78%)</b></div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--line); margin:14px 0;">
+          <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+            <span style="color:#5b7470;">See Dr. Amadi at LUTH</span>
+            <span style="color:#5b7470;">Check blood sugar/BP</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Hospital Locator <span class="dots">⋮</span></h3>
+          <div class="map-box" id="symMap"></div>
+          <div class="hosp-list">
+            <div class="hosp-row"><div><div class="hosp-name">LUTH Lagos Hospital</div><div class="hosp-sub">Nearby Lagos hospitals</div></div><div class="dist">4.5 km</div></div>
+            <div class="hosp-row"><div><div class="hosp-name">Evercare Hospital</div><div class="hosp-sub">Check blood sugar &amp; BP</div></div><div class="dist">3.1 km</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Health Analytics <span class="lang-toggle"><button class="active">English</button><button>Yoruba</button></span></h3>
+          <div class="chart-row">
+            <div class="chart-card">
+              <div class="chart-legend"><span class="risk-dot" style="background:var(--blue)"></span>BP Trend</div>
+              <svg viewBox="0 0 100 50"><polyline points="0,40 25,30 50,32 75,15 100,10" fill="none" stroke="#3a7fd5" stroke-width="2.5"/></svg>
+            </div>
+            <div class="chart-card">
+              <div class="chart-legend"><span class="risk-dot" style="background:var(--green-600)"></span>Activity</div>
+              <svg viewBox="0 0 100 50"><rect x="5" y="20" width="10" height="25" fill="#22b58e"/><rect x="25" y="10" width="10" height="35" fill="#22b58e"/><rect x="45" y="25" width="10" height="20" fill="#22b58e"/><rect x="65" y="5" width="10" height="40" fill="#22b58e"/><rect x="85" y="15" width="10" height="30" fill="#22b58e"/></svg>
+            </div>
+            <div class="chart-card">
+              <div class="chart-legend"><span class="risk-dot" style="background:var(--amber)"></span>Weight</div>
+              <svg viewBox="0 0 100 50"><polyline points="0,15 25,18 50,12 75,20 100,17" fill="none" stroke="#f0a83b" stroke-width="2.5"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEALTH HUB -->
+    <section class="page grid2" id="page-hub">
+      <div class="card">
+        <h3>Preventive Care Guides <span class="dots">⋮</span></h3>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <div class="guide-icon" style="background:#fdeceb;">🦟</div>
+            <h4>Managing Malaria Risk</h4>
+            <div class="quicklinks"><span class="pill">Articles</span><span class="pill">Videos</span></div>
+          </div>
+          <div class="guide-card">
+            <div class="guide-icon" style="background:#fdf3e0;">❤️</div>
+            <h4>Hypertension &amp; Diet</h4>
+            <div class="quicklinks"><span class="pill">Articles</span><span class="pill">Videos</span></div>
+          </div>
+          <div class="guide-card">
+            <div class="guide-icon" style="background:#e6f0fb;">🩸</div>
+            <h4>Diabetes Awareness &amp; Diet</h4>
+            <div class="quicklinks"><span class="pill">Articles</span><span class="pill">Videos</span></div>
+          </div>
+          <div class="guide-card">
+            <div class="guide-icon" style="background:#e3f6ef;">🤲</div>
+            <h4>Diabetes Awareness</h4>
+            <div class="quicklinks"><span class="pill">Articles</span><span class="pill">Videos</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div class="card">
+          <h3>Medication Manager <span class="lang-toggle"><button class="active">English</button><button>Yoruba</button></span></h3>
+          <label>Drug interaction checker — enter two medication names</label>
+          <input type="text" id="med1" placeholder="Medication 1 (e.g. Paracetamol)" style="margin-bottom:8px;">
+          <input type="text" id="med2" placeholder="Medication 2 (e.g. Lisinopril)">
+          <button class="btn full" id="checkSafety">Check safety</button>
+          <div class="interaction-result" id="interactionOut"></div>
+          <hr style="border:none;border-top:1px solid var(--line); margin:14px 0;">
+          <label style="margin-bottom:8px;">Local Nigerian pharmacies</label>
+          <div class="hosp-list">
+            <div class="hosp-row"><div class="hosp-name">HealthPlus Pharmacy</div><div class="dist">2.0 km</div></div>
+            <div class="hosp-row"><div class="hosp-name">MedPlus Pharmacy</div><div class="dist">2.8 km</div></div>
+            <div class="hosp-row"><div class="hosp-name">Greenlife Pharmacy</div><div class="dist">3.3 km</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Wellness Tracker <span class="dots">⋮</span></h3>
+          <div class="tracker-grid">
+            <div class="tracker-cell"><label>Water (glasses)</label><input type="number" value="6"></div>
+            <div class="tracker-cell"><label>Sleep (hrs)</label><input type="number" value="7"></div>
+            <div class="tracker-cell"><label>Activity (min)</label><input type="number" value="35"></div>
+          </div>
+          <button class="btn full" onclick="alert('Saved today\'s wellness numbers.')">Save today's log</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOSPITALS -->
+    <section class="page grid2" id="page-hospitals">
+      <div class="card">
+        <h3>Search &amp; Filter <span class="dots">⋮</span></h3>
+        <label>Search by name or area</label>
+        <input type="text" id="hospSearch" placeholder="e.g. Ikeja, LUTH...">
+        <div class="chip-row">
+          <span class="chip selected" data-filter="all">All</span>
+          <span class="chip" data-filter="public">Public</span>
+          <span class="chip" data-filter="private">Private</span>
+          <span class="chip" data-filter="pharmacy">Pharmacy</span>
+        </div>
+        <div class="hosp-list" id="hospResults" style="margin-top:18px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Map View <span class="dots">⋮</span></h3>
+        <div class="map-box" id="hospMap" style="height:320px;"></div>
+        <p style="font-size:11.5px; color:#8aa09c; margin-top:10px;">Tap a result on the left to highlight it on the map.</p>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="page grid2" id="page-reports">
+      <div class="card span2">
+        <h3>Explainable ML Risk Trends <span class="range-pill">Last 6 months (Jan–June)</span></h3>
+        <div class="chart-row">
+          <div class="chart-card">
+            <div class="chart-legend"><span class="risk-dot" style="background:var(--blue)"></span>Diabetes</div>
+            <svg viewBox="0 0 100 50"><polyline points="0,42 25,30 50,33 75,18 100,8" fill="none" stroke="#3a7fd5" stroke-width="2.5"/></svg>
+          </div>
+          <div class="chart-card">
+            <div class="chart-legend"><span class="risk-dot" style="background:var(--green-600)"></span>Hypertension</div>
+            <svg viewBox="0 0 100 50"><polyline points="0,40 25,28 50,30 75,12 100,6" fill="none" stroke="#22b58e" stroke-width="2.5"/></svg>
+          </div>
+          <div class="chart-card">
+            <div class="chart-legend"><span class="risk-dot" style="background:var(--teal-700)"></span>Malaria</div>
+            <svg viewBox="0 0 100 50"><polyline points="0,30 25,35 50,20 75,28 100,10" fill="none" stroke="#0f5e57" stroke-width="2.5"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Assessment History <span class="dots">⋮</span></h3>
+        <table>
+          <thead><tr><th>Date</th><th>Symptom</th><th>AI prediction</th></tr></thead>
+          <tbody>
+            <tr><td>2026-05-28</td><td>Headache, fever</td><td><span class="badge-risk high">High risk</span></td></tr>
+            <tr><td>2026-05-27</td><td>Hypertension</td><td><span class="badge-risk high">High risk</span></td></tr>
+            <tr><td>2026-05-26</td><td>Fever</td><td><span class="badge-risk mod">Diabetes &amp; malaria</span></td></tr>
+            <tr><td>2026-05-23</td><td>Hypertension</td><td><span class="badge-risk high">High risk</span></td></tr>
+            <tr><td>2026-05-20</td><td>Malaria</td><td><span class="badge-risk high">High risk</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Personalized Data Insights <span class="dots">⋮</span></h3>
+        <div class="insight"><div class="ai">AI</div><div class="txt">Average blood pressure trended slightly high on weekends — review sodium intake.</div></div>
+        <div class="insight"><div class="ai">AI</div><div class="txt">Sleep dropped below 6 hours twice this week, which can raise blood pressure readings.</div></div>
+        <div class="insight"><div class="ai">AI</div><div class="txt">Step count improved 18% versus last month — keep up the daily walks.</div></div>
+      </div>
+
+      <div class="card span2">
+        <h3>Downloadable Reports <span class="dots">⋮</span></h3>
+        <div class="dl-grid">
+          <div class="dl-card" onclick="alert('Downloading full report as PDF...')"><div class="ic">📄</div><div class="lbl">Full report (PDF)</div></div>
+          <div class="dl-card" onclick="alert('Downloading assessment history as CSV...')"><div class="ic">📊</div><div class="lbl">Assessment history (CSV)</div></div>
+          <div class="dl-card" onclick="alert('Downloading wellness log as CSV...')"><div class="ic">📊</div><div class="lbl">Wellness log (CSV)</div></div>
+          <div class="dl-card" onclick="alert('Downloading lab results as CSV...')"><div class="ic">📊</div><div class="lbl">Lab results (CSV)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT -->
+    <section class="page grid2" id="page-support">
+      <div class="card">
+        <h3>FAQs <span class="dots">⋮</span></h3>
+        <div id="faqList">
+          <div class="faq-item">
+            <div class="faq-q">Finding nearby clinics <span class="chev">▾</span></div>
+            <div class="faq-a">Open Locate Hospitals from the sidebar, then search by name or area, or browse the map for clinics close to you.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Understanding risk scores <span class="chev">▾</span></div>
+            <div class="faq-a">Risk scores combine your symptoms, history, and habits into a likelihood estimate. They support a conversation with a doctor — they don't replace one.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How the AI makes predictions <span class="chev">▾</span></div>
+            <div class="faq-a">The Symptom Checker uses a model trained on common conditions in Nigeria, weighted by your age, weight, and medical history.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Emergency contacts <span class="chev">▾</span></div>
+            <div class="faq-a">Use the Urgent Care Contacts panel on this page to call Lagos State Emergency Services directly.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Switching to Yoruba <span class="chev">▾</span></div>
+            <div class="faq-a">Look for the English / Yoruba toggle near the Symptom Checker and Health Hub cards to switch the assistant's language.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Connect with Local Care <span class="dots">⋮</span></h3>
+        <div class="map-box" id="supportMap" style="height:200px;"></div>
+        <h3 style="margin-top:18px;">Urgent Care Contacts</h3>
+        <div class="urgent-grid">
+          <div class="urgent-card">
+            <div class="name">Lagos State Emergency Service</div>
+            <div class="num">(800) 535-7750</div>
+            <button class="btn full">Call now</button>
+          </div>
+          <div class="urgent-card">
+            <div class="name">LUTH Emergency Line</div>
+            <div class="num">(800) 377-1750</div>
+            <button class="btn full">Call now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<button class="livechat-btn" id="liveChatBtn">💬 Live Chat</button>
+
+  <script src="index.js"></script>
+</body>
+</html>
