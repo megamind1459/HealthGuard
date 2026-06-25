@@ -1,4 +1,4 @@
-/* ===== Navigation: sidebar + tabs both control the same page state ===== */
+/* ===== Navigation: sidebar + tabs + bottom nav all control the same page state ===== */
 const pages = ['dashboard','symptom','hub','hospitals','reports','support'];
 function goTo(page){
   pages.forEach(p=>{
@@ -6,10 +6,29 @@ function goTo(page){
   });
   document.querySelectorAll('.navlink[data-page]').forEach(b=>b.classList.toggle('active', b.dataset.page===page));
   document.querySelectorAll('.tab[data-page]').forEach(b=>b.classList.toggle('active', b.dataset.page===page));
+  document.querySelectorAll('.bn-item[data-page]').forEach(b=>b.classList.toggle('active', b.dataset.page===page));
+  closeDrawer();
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
 }
-document.querySelectorAll('.navlink[data-page], .tab[data-page]').forEach(btn=>{
+document.querySelectorAll('.navlink[data-page], .tab[data-page], .bn-item[data-page]').forEach(btn=>{
   btn.addEventListener('click', ()=> goTo(btn.dataset.page));
 });
+
+/* ===== Mobile drawer (hamburger) ===== */
+const sidebarEl = document.getElementById('sidebar');
+const backdropEl = document.getElementById('sidebarBackdrop');
+function openDrawer(){
+  sidebarEl.classList.add('open');
+  backdropEl.classList.add('show');
+}
+function closeDrawer(){
+  sidebarEl.classList.remove('open');
+  backdropEl.classList.remove('show');
+}
+document.getElementById('hamburgerBtn').addEventListener('click', openDrawer);
+document.getElementById('sidebarCloseBtn').addEventListener('click', closeDrawer);
+backdropEl.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); });
 
 /* ===== Top bar: bell + profile/lang popover ===== */
 document.getElementById('profileBtn').addEventListener('click', ()=>{
@@ -23,6 +42,12 @@ document.addEventListener('click', (e)=>{
 document.getElementById('bellBtn').addEventListener('click', ()=>{
   alert('Notifications:\n• High BP risk flagged — review Reports\n• Reminder: log today\'s wellness numbers\n• New article: Managing Malaria Risk');
 });
+const bellMobile = document.getElementById('bellBtnMobile');
+if(bellMobile){
+  bellMobile.addEventListener('click', ()=>{
+    alert('Notifications:\n• High BP risk flagged — review Reports\n• Reminder: log today\'s wellness numbers\n• New article: Managing Malaria Risk');
+  });
+}
 document.getElementById('liveChatBtn').addEventListener('click', ()=>{
   goTo('support');
   alert('Connecting you to a live support agent...');

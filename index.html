@@ -18,9 +18,24 @@
 
 <div class="shell">
 
+  <!-- MOBILE TOP BAR (hamburger + brand) -->
+  <div class="mobile-topbar">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="brand mobile-brand"><span class="dot">♥</span> HealthGuard AI</div>
+    <button class="iconbtn" id="bellBtnMobile">🔔<span class="badge">3</span></button>
+  </div>
+
+  <!-- SIDEBAR BACKDROP (mobile) -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
   <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="brand"><span class="dot">♥</span> HealthGuard AI</div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="dot">♥</span> HealthGuard AI
+      <button class="sidebar-close" id="sidebarCloseBtn" aria-label="Close menu">✕</button>
+    </div>
     <nav class="nav-stack">
       <button class="navlink active" data-page="dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
@@ -340,6 +355,7 @@
 
       <div class="card">
         <h3>Assessment History <span class="dots">⋮</span></h3>
+        <div class="table-scroll">
         <table>
           <thead><tr><th>Date</th><th>Symptom</th><th>AI prediction</th></tr></thead>
           <tbody>
@@ -350,6 +366,7 @@
             <tr><td>2026-05-20</td><td>Malaria</td><td><span class="badge-risk high">High risk</span></td></tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       <div class="card">
@@ -419,6 +436,29 @@
 
   </div>
 </div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" data-page="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="bn-item" data-page="symptom">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0-1.5 1-2.5 2.5-2.5S14 8 14 9.5"/><path d="M12 13v3"/></svg>
+    <span>Checker</span>
+  </button>
+  <button class="bn-item" data-page="hospitals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c5-4.5 8-8.3 8-12a8 8 0 1 0-16 0c0 3.7 3 7.5 8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    <span>Hospitals</span>
+  </button>
+  <button class="bn-item" data-page="reports">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/></svg>
+    <span>Reports</span>
+  </button>
+  <button class="bn-item" data-page="support">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.7 2.2c-.8.5-1.2.9-1.2 1.8"/><path d="M12 17h.01"/></svg>
+    <span>Support</span>
+  </button>
+</nav>
 
 <button class="livechat-btn" id="liveChatBtn">💬 Live Chat</button>
 
