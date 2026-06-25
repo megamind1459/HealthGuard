@@ -170,6 +170,19 @@
             <button data-lang="yo">Yoruba</button>
           </span>
         </h3>
+
+        <div class="ai-connect-bar" id="aiConnectBar">
+          <span class="ai-status" id="aiStatus">⚪ GPT not connected — running on canned replies</span>
+          <button class="pill" id="aiConnectToggle" type="button">Connect GPT</button>
+        </div>
+        <div class="ai-key-row" id="aiKeyRow" style="display:none;">
+          <input type="text" id="openaiKey" placeholder="Paste your OpenAI API key (sk-...)" autocomplete="off">
+          <button class="btn" id="aiKeySave" type="button">Save</button>
+        </div>
+        <p class="ai-key-note" id="aiKeyNote" style="display:none;">
+          Stored only in this browser's localStorage, sent directly from your browser to OpenAI. Never share this file with your key saved in it, and don't paste a key on a shared/public computer.
+        </p>
+
         <div class="chat-box" id="chatBox">
           <div class="msg bot">Hi Moussa, what symptom are you noticing today?</div>
         </div>

@@ -62,41 +62,147 @@ document.querySelectorAll('.chip-row').forEach(row=>{
   });
 });
 
-/* ===== Symptom Checker: chat ===== */
+/* ===== Symptom Checker: AI-backed chat (OpenAI) ===== */
 const chatBox = document.getElementById('chatBox');
 const chatInput = document.getElementById('chatInput');
-const botReplies = {
-  fever:"I see — fever can point to malaria or typhoid here in Lagos. Have you had chills or body aches too?",
-  headache:"Noted. How long has the headache lasted, and is it paired with light sensitivity?",
-  cough:"Thanks. Is the cough dry or are you bringing up phlegm?",
-  default:"Got it, I've noted that. Tell me a bit more, or fill in the Early Disease Assessment below for a risk score."
-};
+const aiStatus = document.getElementById('aiStatus');
+const aiConnectBar = document.getElementById('aiConnectBar');
+const aiConnectToggle = document.getElementById('aiConnectToggle');
+const aiKeyRow = document.getElementById('aiKeyRow');
+const aiKeyNote = document.getElementById('aiKeyNote');
+const openaiKeyInput = document.getElementById('openaiKey');
+const aiKeySaveBtn = document.getElementById('aiKeySave');
+
+const OPENAI_KEY_STORAGE = 'healthguard_openai_key';
+const SYSTEM_PROMPT = `You are the AI assistant inside "HealthGuard AI", a health-guidance app for Lagos, Nigeria.
+Keep replies short (2-4 sentences), warm, and plain-language. Ask one clarifying question at a time when symptoms are vague.
+You are NOT a doctor and must not give a definitive diagnosis or prescribe medication or dosages.
+For anything that sounds urgent (chest pain, difficulty breathing, severe bleeding, stroke signs, loss of consciousness), tell the person to seek emergency care immediately and mention the Urgent Care Contacts in the Support tab.
+Otherwise, help them describe their symptoms and gently point them to the Early Disease Assessment form below the chat, or to Locate Hospitals / Health Hub when relevant.`;
+
+let chatHistory = [{role:'system', content: SYSTEM_PROMPT}];
+
+function getStoredKey(){
+  try { return localStorage.getItem(OPENAI_KEY_STORAGE) || ''; } catch(e){ return ''; }
+}
+function setStoredKey(key){
+  try { if(key) localStorage.setItem(OPENAI_KEY_STORAGE, key); else localStorage.removeItem(OPENAI_KEY_STORAGE); } catch(e){}
+}
+function refreshAiStatus(){
+  const key = getStoredKey();
+  if(key){
+    aiStatus.textContent = '🟢 Connected to GPT-4o-mini';
+    aiStatus.className = 'ai-status on';
+    aiConnectToggle.textContent = 'Change key';
+  } else {
+    aiStatus.textContent = '⚪ GPT not connected — running on basic replies';
+    aiStatus.className = 'ai-status';
+    aiConnectToggle.textContent = 'Connect GPT';
+  }
+}
+aiConnectToggle.addEventListener('click', ()=>{
+  const showing = aiKeyRow.style.display !== 'none';
+  aiKeyRow.style.display = showing ? 'none' : 'flex';
+  aiKeyNote.style.display = showing ? 'none' : 'block';
+  if(!showing) openaiKeyInput.value = getStoredKey();
+});
+aiKeySaveBtn.addEventListener('click', ()=>{
+  const val = openaiKeyInput.value.trim();
+  setStoredKey(val);
+  refreshAiStatus();
+  aiKeyRow.style.display = 'none';
+  aiKeyNote.style.display = 'none';
+  addMsg(val ? "GPT is connected. Ask me about how you're feeling." : "GPT disconnected — back to basic replies.", 'bot');
+});
+refreshAiStatus();
+
 function addMsg(text, who){
   const div = document.createElement('div');
   div.className = 'msg ' + who;
   div.textContent = text;
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
+  return div;
 }
-function botReplyFor(text){
+function addTypingIndicator(){
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+  return div;
+}
+
+/* Basic fallback replies used only when no API key is connected */
+const botReplies = {
+  fever:"I see — fever can point to malaria or typhoid here in Lagos. Have you had chills or body aches too?",
+  headache:"Noted. How long has the headache lasted, and is it paired with light sensitivity?",
+  cough:"Thanks. Is the cough dry or are you bringing up phlegm?",
+  default:"Got it, I've noted that. Tell me a bit more, or fill in the Early Disease Assessment below for a risk score. (Connect GPT above for fuller conversations.)"
+};
+function basicReplyFor(text){
   const t = text.toLowerCase();
   if(t.includes('fever')) return botReplies.fever;
   if(t.includes('headache')) return botReplies.headache;
   if(t.includes('cough')) return botReplies.cough;
   return botReplies.default;
 }
-function sendChat(text){
-  if(!text.trim()) return;
+
+async function getAiReply(userText){
+  const key = getStoredKey();
+  chatHistory.push({role:'user', content:userText});
+  if(!key){
+    return basicReplyFor(userText);
+  }
+  try{
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model:'gpt-4o-mini',
+        messages: chatHistory,
+        max_tokens: 200,
+        temperature: 0.6
+      })
+    });
+    if(!res.ok){
+      const errBody = await res.json().catch(()=>({}));
+      const msg = errBody?.error?.message || `Request failed (${res.status})`;
+      throw new Error(msg);
+    }
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim() || "Sorry, I didn't get a reply — try again.";
+    chatHistory.push({role:'assistant', content:reply});
+    return reply;
+  } catch(err){
+    aiStatus.textContent = '🔴 GPT error — check your API key';
+    aiStatus.className = 'ai-status err';
+    return `I couldn't reach GPT just now (${err.message}). Falling back to a basic reply: ${basicReplyFor(userText)}`;
+  }
+}
+
+let sending = false;
+async function sendChat(text){
+  if(!text.trim() || sending) return;
+  sending = true;
   addMsg(text,'user');
   document.getElementById('symInput').value = text;
-  setTimeout(()=> addMsg(botReplyFor(text),'bot'), 350);
+  const typingEl = addTypingIndicator();
+  const reply = await getAiReply(text);
+  typingEl.remove();
+  addMsg(reply, 'bot');
+  sending = false;
 }
 document.getElementById('sendBtn').addEventListener('click', ()=>{
-  sendChat(chatInput.value);
+  const v = chatInput.value;
   chatInput.value='';
+  sendChat(v);
 });
 chatInput.addEventListener('keydown', (e)=>{
-  if(e.key==='Enter'){ sendChat(chatInput.value); chatInput.value=''; }
+  if(e.key==='Enter'){ const v = chatInput.value; chatInput.value=''; sendChat(v); }
 });
 document.querySelectorAll('#symptomChips .chip').forEach(chip=>{
   chip.addEventListener('click', ()=> sendChat(chip.dataset.sym));
